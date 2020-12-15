@@ -23,13 +23,13 @@ const renderButtons = () => {
 	btnHolder.classList.add("btn-holder");
 	
 	const chevUp = document.createElement('i');
-	chevUp.classList.add('fas','fa-chevron-up');
+	chevUp.classList.add('fas','fa-chevron-up');     // TODO #3 @RCMiron help needed here.
 	btnHolder.prepend(chevUp);
 
 	renderedButtons.forEach(item => btnHolder.append(item));
 	
 	const chevDown =document.createElement('i');
-	chevDown.classList.add('fas','fa-chevron-down');
+	chevDown.classList.add('fas','fa-chevron-down');    // TODO #2 @RCMiron and here.
 	btnHolder.append(chevDown);
 
 	mainContainer.append(btnHolder);
