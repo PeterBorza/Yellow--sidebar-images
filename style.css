@@ -26,18 +26,25 @@ header {
 .header-text {
   position: relative;
   width: 30%;
-  height: 50%;
-  font-size: 30px;
+  height: 100%;
+  font-size: 35px;
   overflow: hidden;
   cursor: pointer;
 }
 
 .header-text span {
   position: absolute;
+  display: grid;
+  place-items: center;
   color: white;
   width: 100%;
-  text-align: center;
+  height: 100%;
   transform: translateY(-100%);
+  transition:  transform 800ms ease-out;
+}
+
+.header-text span:hover{
+  color: #f0bb0e;
 }
 
 main {
@@ -68,6 +75,8 @@ main {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  transition: transform 600ms ease-out;
+  overflow: hidden;
 }
 
 button {
@@ -76,12 +85,13 @@ button {
   background-color: #aaa2a2;
   color: #292727;
   font-size: 20px;
-  height: 40px;
-  width: 50%;
+  height: 4rem;
+  width: 60%;
   opacity: 0.9;
   cursor: pointer;
   font-family: 'Fredoka One', cursive;
   margin: 2px;
+  transition:  transform 300ms ease;
 }
 
 button:hover {
@@ -99,6 +109,20 @@ button:hover {
   transform: scale(1.02);
 }
 
+.fa-chevron-up,
+.fa-chevron-down{
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  right: 0;
+  top: 5px;
+  cursor: pointer;
+}
+
+.fa-chevron-down{
+  top: 40px;
+}
+
 .img-container {
   position: absolute;
   right: 0;
@@ -111,6 +135,6 @@ button:hover {
 .img-container img {
   position: absolute;
   width: 60%;
-  height: 95%;
+  /* height: 95%; */
 }
 /*# sourceMappingURL=style.css.map */
