@@ -1,71 +1,103 @@
 // animation into object array!!!!
 //  side menu class styling !!!!
+const p = console.log;
 
-const images = [
-	{ source: "/documentation/juc.jpg", id: "img1", btnid: "btn1" },
-	{ source: "/documentation/juc1.jpg", id: "img2", btnid: "btn2" },
-	{ source: "/documentation/juc2.jpg", id: "img3", btnid: "btn3" },
-	{ source: "/documentation/juc3.jpg", id: "img4", btnid: "btn4" },
-	{ source: "/documentation/IMG_4909.JPG", id: "img5", btnid: "btn5" },
-	{ source: "/documentation/IMG_4910.JPG", id: "img6", btnid: "btn6" },
-	{ source: "/documentation/IMG_4911.JPG", id: "img7", btnid: "btn7" },
-];
+const createTag = (tagName, className) => {
+	const el = document.createElement(tagName);
+	el.classList.add(className);
 
-// THE SETUP 
+	return el;
+};
+
+const images = [];
+const imageArrayMaker = (src) => {
+	for (let i = 0; i < 16; i++) {
+		src = `IMG_52${i + 35}.JPG`;
+		images.push(src);
+	}
+	return images;
+};
+imageArrayMaker();
+
+// THE SETUP
 //*********
 const mainContainer = document.querySelector(".container");
 
-const renderButtons = () => {
-
+const sideBar = () => {
 	const renderedButtons = createButtons();
 
-	const btnHolder = document.createElement("div");
-	btnHolder.classList.add("btn-holder");
-	
-	const chevUp = document.createElement('i');
-	chevUp.classList.add('fas','fa-chevron-up');     // TODO #3 @RCMiron help needed here.
-	btnHolder.prepend(chevUp);
+	const btnHolder = createTag("div", "btn-holder");
 
-	renderedButtons.forEach(item => btnHolder.append(item));
-	
-	const chevDown =document.createElement('i');
-	chevDown.classList.add('fas','fa-chevron-down');    // TODO #2 @RCMiron and here.
-	btnHolder.append(chevDown);
+	const chevUp = createTag("i", "fas");
+	chevUp.classList.add("fa-chevron-up"); // TODO #3 @RCMiron help needed here.
 
-	mainContainer.append(btnHolder);
+	renderedButtons.forEach((item) => btnHolder.append(item));
 
+	const chevDown = createTag("i", "fas");
+	chevDown.classList.add("fa-chevron-down"); // TODO #2 @RCMiron and here.
+	btnHolder.append(chevUp, chevDown);
 
-	const imgContainer = document.createElement("div");
-	imgContainer.classList.add("img-container");
-	mainContainer.append(imgContainer);
+	const imgContainer = createTag("div", "img-container");
 
+	mainContainer.append(btnHolder, imgContainer);
+
+	btnHolder.addEventListener("click", (e) => {
+		if (e.target.classList.contains("fa-chevron-up")) {
+			renderedButtons.forEach(
+				(item) => (item.style.transform += "translateY(-100%)")
+			);
+		} else if (e.target.classList.contains("fa-chevron-down")) {
+			renderedButtons.forEach(
+				(item) => (item.style.transform += "translateY(100%)")
+			);
+		} else if (e.target.hasAttribute('src')) {
+			imgContainer.innerHTML = "";
+			let targetSrc = e.target.getAttribute("src");
+			const image = document.createElement("img");
+			image.setAttribute("src", targetSrc);
+			imgContainer.append(image);
+			p('id');
+		} else {
+			return;
+		}
+	});
 };
 
 const createButtons = () => images.map(createButton);
 
-const createButton = item => {
+const createButton = (item, i) => {
 	const img = document.createElement("img");
-	img.setAttribute("src", item.source);
-	img.setAttribute("alt", item.id);
+	img.src = `documentation/${item}`;
+	img.alt = `img${i + 1}`;
 
 	const button = document.createElement("button");
-	button.setAttribute("id", item.btnid);
+	button.id = `btn${i + 1}`;
 	button.appendChild(img);
 
-	
-
-	button.addEventListener("click", e => {
-		const imgContainer = document.querySelector('.img-container');
-		imgContainer.innerHTML = '';
-		let target = e.target.getAttribute("src");
-		const image = document.createElement("img");
-		image.setAttribute("src", target);
-		imgContainer.append(image);
-		// console.log(target);
-	});
-	
 	return button;
 };
 
-renderButtons();
-console.log('javaScript is running');
+sideBar();
+
+// ********************************************************
+{
+	/* <h1 class="header-text"><span>JS animate width toggle</span></h1> */
+}
+const header = document.querySelector("header");
+
+const createHeader = () => {
+	const title = createTag("h1", "header-text");
+	const titleSpan = createTag("span", undefined);
+	titleSpan.innerHTML = "JS animate width toggle";
+	title.append(titleSpan);
+	header.append(title);
+	window.addEventListener(
+		"DOMContentLoaded",
+		() => (titleSpan.style.transform = "translateY(0%)")
+	);
+	titleSpan.addEventListener("click", () => {
+		const btnHolder = document.querySelector(".btn-holder");
+		btnHolder.style.transform = "translateX(0%)";
+	});
+};
+createHeader();
